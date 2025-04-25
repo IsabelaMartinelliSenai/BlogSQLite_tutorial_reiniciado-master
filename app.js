@@ -4,6 +4,9 @@ const sqlite3 = require("sqlite3"); //importa lib sqlite3
 
 const PORT = 3000; //porta TCP do servidor HTTP da aplicação
 
+//Variáveis usadas no EJS (padrão)
+let config = { title: "", footer: "" };
+
 const app = express(); //instância p/ uso do express
 
 //Cria conexão com o banco de dados
@@ -45,9 +48,9 @@ app.get("/", (req, res) => {
   console.log("GET /index");
   //rota raiz do servidor, acesse o browser com o endereço http://localhost:3000/
   //res.send(home);
-  res.render("pages/index", {
-    title: "Home",
-  });
+
+  config = { title: "Blog da turma I2HNA - SESI Nova Odessa", footer: "" };
+  res.render("pages/index", config);
   // res.redirect("/cadastro"); //Redireciona para a ROTA cadastro
 });
 
@@ -55,17 +58,13 @@ app.get("/sobre", (req, res) => {
   console.log("GET /sobre");
   //rota raiz do servidor, acesse o browser com o endereço http://localhost:3000/sobre
   // res.send(sobre);
-  res.render(sobre, {
-    title: "Sobre",
-  });
+  res.render(sobre, config);
 });
 
 app.get("/login", (req, res) => {
   console.log("GET /login");
   //rota raiz do servidor, acesse o browser com o endereço http://localhost:3000/login
-  res.render("pages/login", {
-    title: "Login",
-  });
+  res.render("pages/login", config);
 });
 
 app.post("/login", (req, res) => {
@@ -76,9 +75,7 @@ app.post("/login", (req, res) => {
 app.get("/dashboard", (req, res) => {
   console.log("GET /dashboard");
   //rota raiz do servidor, acesse o browser com o endereço http://localhost:3000/login
-  res.render("pages/dashboard", {
-    title: "Dashboard",
-  });
+  res.render("pages/dashboard", config);
 });
 
 //app.post("/login", (req, res) => {
@@ -89,16 +86,15 @@ app.get("/usuarios", (req, res) => {
   const query = "SELECT * FROM users";
   db.all(query, (err, row) => {
     console.log(`GET /usuarios ${JSON.stringify(row)}`);
-    res.send("Lista de usuários");
+    //res.send("Lista de usuários");
+    res.render("partials/userTable", config);
   });
 });
 
 //GET Cadastro
 app.get("/cadastro", (req, res) => {
   console.log("GET /cadastro");
-  res.render("pages/cadastro", {
-    title: "Cadastro",
-  });
+  res.render("pages/cadastro", config);
 });
 
 //POST do cadastro

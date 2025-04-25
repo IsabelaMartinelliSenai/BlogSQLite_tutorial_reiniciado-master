@@ -1,3 +1,7 @@
+<!-- <%#for( let i = 0; i < ; i++ ) { %>
+<p><%# i %></p>
+<%# } %> -->
+
 <table>
   <thead>
     <tr>
@@ -8,7 +12,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
+    <!-- <tr>
       <td>1</td>
       <td>NOME</td>
       <td>E-MAIL</td>
@@ -25,6 +29,15 @@
       <td>NOME</td>
       <td>E-MAIL</td>
       <td>CELULAR</td>
+    </tr> -->
+
+    <% for( let i = 1; i < 11; i++ ) { %>
+    <tr>
+      <td><p><%=i%></p></td>
+      <td>NOME</td>
+      <td>E-MAIL</td>
+      <td>CELULAR</td>
     </tr>
+    <% } %>
   </tbody>
 </table>
