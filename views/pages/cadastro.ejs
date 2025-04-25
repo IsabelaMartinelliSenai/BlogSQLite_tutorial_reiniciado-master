@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head'); %>
+  <body>
+    <%- include('../partials/menu'); %>
+
+    <div class="container_rain">
+      <span class="cloud"></span>
+      <span class="cloud"></span>
+      <span class="cloud"></span>
+    </div>
+
+    <section class="container">
+      <div class="image_container">
+        <h1>Crie sua conta</h1>
+        <p>
+          Compartilhe suas aventuras e <br />
+          descubra novos lugares ao redor do mundo!
+        </p>
+      </div>
+      <form id="cadastroForm" method="post" action="/cadastro">
+        <div class="title">
+          <h1>Cadastre-se</h1>
+          <p>Preencha os campos abaixo e torne-se parte da nossa comunidade.</p>
+        </div>
+
+        <div class="input_data">
+          <input type="text" id="nome" name="username" value="Isa" required />
+          <label for="">Nome</label>
+        </div>
+
+        <div class="input_data">
+          <input type="email" id="email" name="email" value="isa@gmail.com" />
+          <label for="">E-mail</label>
+        </div>
+
+        <div class="input_data">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value="Aa123456@"
+            required
+          />
+          <label for="">Senha</label>
+        </div>
+
+        <div class="input_data">
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            value="Aa123456@"
+            required
+          />
+          <label for="">Confirmar Senha</label>
+        </div>
+
+        <div class="input_data">
+          <input type="tel" id="tel" name="tel" value="88888888888" />
+          <label for="">Celular</label>
+        </div>
+
+        <div class="input_data">
+          <input type="text" id="cpf" name="cpf" value="66666666666" />
+          <label for="">CPF</label>
+        </div>
+
+        <div class="input_data">
+          <input type="text" id="rg" name="rg" value="777777777" required />
+          <label for="">RG</label>
+        </div>
+
+        <div class="btnArea">
+          <p class="msgError">MENSAGEM DE ERRO</p>
+          <button id="btnSubmit" type="submit">Enviar</button>
+        </div>
+      </form>
+    </section>
+
+    <%- include('../partials/footer'); %>
+  </body>
+</html>
