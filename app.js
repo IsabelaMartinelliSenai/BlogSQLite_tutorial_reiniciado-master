@@ -60,7 +60,7 @@ app.get("/", (req, res) => {
   //res.send(home);
 
   config = { title: "Blog da turma I2HNA - SESI Nova Odessa", footer: "" };
-  res.render("pages/index", config);
+  res.render("pages/index", { ...config, req: req });
   // res.redirect("/cadastro"); //Redireciona para a ROTA cadastro
 });
 
@@ -68,18 +68,19 @@ app.get("/sobre", (req, res) => {
   console.log("GET /sobre");
   //rota raiz do servidor, acesse o browser com o endereço http://localhost:3000/sobre
   // res.send(sobre);
-  res.render(sobre, config);
+  res.render(sobre, { ...config, req: req });
 });
 
 app.get("/login", (req, res) => {
   console.log("GET /login");
   //rota raiz do servidor, acesse o browser com o endereço http://localhost:3000/login
-  res.render("pages/login", config);
+  res.render("pages/login", { ...config, req: req });
 });
 
 app.post("/login", (req, res) => {
   console.log("POST /login");
   const { username, password } = req.body;
+  console.log("req.body: ", JSON.stringify(req.body))
 
   //Consultar o usuário no banco de dados
   const query = "SELECT * FROM users WHERE username = ? AND password = ?";
@@ -98,11 +99,23 @@ app.post("/login", (req, res) => {
   });
 });
 
-app.get("/dashboard", (req, res) => {
-  console.log("GET /dashboard");
-  //rota raiz do servidor, acesse o browser com o endereço http://localhost:3000/login
-  res.render("pages/dashboard", config);
-});
+// app.get("/dashboard", (req, res) => {
+//   console.log("GET /dashboard");
+//   //rota raiz do servidor, acesse o browser com o endereço http://localhost:3000/login
+//   console.log(`Dashboard req.body: ${JSON.stringify(req.body)}`)
+//   if (req.session.loggedin) {
+//     const query = "SELECT * FROM users";
+
+//     db.all(query, (err, rows) => {
+//       if (err) throw err;
+
+//       console.log(rows);
+//       res.render("pages/dashboard", { ...config, req: req, dados: rows });
+//     });
+//   } else {
+//     res.redirect("/");
+//   }
+// });
 
 //app.post("/login", (req, res) => {
 //res.send("Login ainda não implementado.");
@@ -113,14 +126,14 @@ app.get("/usuarios", (req, res) => {
   db.all(query, (err, row) => {
     console.log(`GET /usuarios ${JSON.stringify(row)}`);
     //res.send("Lista de usuários");
-    res.render("partials/userTable", config);
+    res.render("partials/userTable", { ...config, req: req });
   });
 });
 
 //GET Cadastro
 app.get("/cadastro", (req, res) => {
   console.log("GET /cadastro");
-  res.render("pages/cadastro", config);
+  res.render("pages/cadastro", { ...config, req: req });
 });
 
 //POST do cadastro
@@ -158,6 +171,40 @@ app.post("/cadastro", (req, res) => {
   // res.send(
   //   `Bem-vindo usuário: ${req.body.username}, seu E-mail é ${req.body.email}`
   // );
+});
+
+app.get("/logout", (req, res) => {
+  req.session.destroy(() => {
+    res.redirect("/");
+  });
+});
+
+app.get("/dashboard", (req, res) => {
+  console.log("GET / dashboard");
+  console.log(JSON.stringify(config));
+
+  if (req.session.loggedin) {
+    db.all("SELECT * FROM users", [], (err, row) => {
+      if (err) throw err;
+
+      console.log(row);
+      res.render("pages/dashboard", {
+        titulo: "DASHBOARD",
+        dados: row,
+        req: req,
+        ...config,
+      });
+    });
+  } else {
+    console.log("Tentativa de acesso a área restrita");
+    res.redirect("/");
+  }
+});
+
+// Middleware para capturar rotas não existentes
+app.use("*", (req, res) => {
+  // Envia uma resposta de erro 404
+  res.status(404).render("pages/404", { ...config, req: req });
 });
 
 //app.listen() deve ser o último comando da aplicação

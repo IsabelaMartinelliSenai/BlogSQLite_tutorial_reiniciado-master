@@ -3,8 +3,20 @@
   <nav>
     <a href="/">Home</a>
     <a href="/sobre">Sobre</a>
-    <a href="/cadastro">Cadastro</a>
+    <!-- <a href="/cadastro">Cadastro</a>
     <a href="/login">Login</a>
+    <!-- <a href="/dashboard">Dashboard</a> -->
+    <!-- <a href="/logout">Logout</a> -->
+    <% if (!req.session.loggedin) { %>
+
+    <a href="/login">Login</a>
+    <a href="/cadastro">Cadastro</a>
+
+    <% }else { %>
+
     <a href="/dashboard">Dashboard</a>
+    <a href="/logout">Logout</a>
+
+    <% } %>
   </nav>
 </header>

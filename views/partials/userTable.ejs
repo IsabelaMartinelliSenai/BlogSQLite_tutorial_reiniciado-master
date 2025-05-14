@@ -1,7 +1,7 @@
 <!-- <%#for( let i = 0; i < ; i++ ) { %>
 <p><%# i %></p>
 <%# } %> -->
-
+<% console.log(dados); %>
 <table>
   <thead>
     <tr>
@@ -12,22 +12,21 @@
     </tr>
   </thead>
   <tbody>
-    <% for( let i = 1; i < 11; i++ ) { %>
-    <tr>
-      <td><p><%=i%></p></td>
-      <td>NOME</td>
-      <td>E-MAIL</td>
-      <td>CELULAR</td>
+    <% let index=1; dados.forEach(user => { %>
+    <tr <%- req.session.username==user.username ? `style="color: white; font-style: bold"` : `` %>>
+      <td><%= user.id %></td>
+      <td><%= user.username %></td>
+      <td><%= user.email %></td>
+      <td><%= user.celular %></td>
+      <td><%= user.password %></td>
     </tr>
-    <% } %>
-    <%# for( let i = 1; i < 11; i++ ) { %> <%# if (i % 3 == 0) { %>
-    <!-- <tr>
-      <td><p><%#=i%></p></td>
-      <td>NOME</td>
-      <td>E-MAIL</td>
-      <td>CELULAR</td> -->
-    </tr>
-
-    <%# } %> <%# } %>
+    <% index++; }); %>
   </tbody>
+  <tfoot>
+    <tr>
+      <th colspan="5" style="font-size: 16px">
+        <%= `Usuários registrados: ${index-1}` %>
+      </th>
+    </tr>
+  </tfoot>
 </table>
