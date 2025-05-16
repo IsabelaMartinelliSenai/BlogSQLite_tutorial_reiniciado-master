@@ -7,7 +7,7 @@
 
   <main class="container">
 
-    <% if ("/cadastro.username"==req.body.username) { %>
+    <% if (req.session.username==req.body.username) { %>
 
     <div class="txt2">
       <h1>Usuário já cadastrado <br> Refaça o cadastro</h1>
