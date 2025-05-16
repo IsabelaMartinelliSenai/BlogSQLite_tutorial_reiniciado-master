@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head'); %>
+
+<body>
+  <header><%- include('../partials/menu'); %></header>
+
+  <main class="container">
+
+    <% if ("/cadastro.username"==req.body.username) { %>
+
+    <div class="txt2">
+      <h1>Usuário já cadastrado <br> Refaça o cadastro</h1>
+    </div>
+    <img class="img" src="/static/images/wallpapergreen.jpg" />
+
+    <% } else if ("/login.username"!=req.session.username) { %>
+
+    <div class="txt2">
+      <h1>Usuário Inválido</h1>
+      <h3>Username ou senha errados</h3>
+    </div>
+    <img class="img" src="/static/images/wallpapergreen.jpg" />
+
+    <% } else { %>
+
+    <div class="txt">
+      <h1>Sorry, <br />the page coudn't be found!</h1>
+    </div>
+    <img class="img" src="/static/images/gato.jpg" />
+
+    <% } %>
+
+  </main>
+
+  <!-- <main class="container">
+    <div class="txt2">
+      <h1>Usuário Inválido</h1>
+      <h3>Username ou senha errados</h3>
+    </div>
+    <img class="img" src="/static/images/wallpapergreen.jpg" />
+  </main> -->
+
+  <footer><%- include('../partials/footer'); %></footer>
+</body>
+
+</html>

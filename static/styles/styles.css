@@ -177,6 +177,13 @@ header nav a:hover {
   color: #de9b38;
 }
 
+.container .txt2 {
+  font-family: "Copperplate";
+  font-size: 18px;
+  text-align: center;
+  color: #08470a;
+}
+
 .img_container {
   width: 100%;
   height: 100%;

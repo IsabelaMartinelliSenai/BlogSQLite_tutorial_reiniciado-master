@@ -77,6 +77,11 @@ app.get("/login", (req, res) => {
   res.render("pages/login", { ...config, req: req });
 });
 
+//GET userinvalido
+// app.get("/userinvalido", (req, res) => {
+//   res.render("pages/userinvalido", { ...config, req: req });
+// });
+
 app.post("/login", (req, res) => {
   console.log("POST /login");
   const { username, password } = req.body;
@@ -94,7 +99,7 @@ app.post("/login", (req, res) => {
       res.redirect("/dashboard");
     } //Se não, envia mensagem de erro (Usuário inválido)
     else {
-      res.send("Usuário invávido.");
+      res.redirect("/fail");
     }
   });
 });
@@ -136,6 +141,22 @@ app.get("/cadastro", (req, res) => {
   res.render("pages/cadastro", { ...config, req: req });
 });
 
+//GET userjacadastrado
+// app.get("/userjacadastrado", (req, res) => {
+//   res.render("pages/userjacadastrado", { ...config, req: req });
+// });
+
+
+//GET usercadastrado
+app.get("/usercadastrado", (req, res) => {
+  res.render("pages/usercadastrado", { ...config, req: req });
+});
+
+//GET fail
+app.get("/fail", (req, res) => {
+  res.render("pages/fail", { ...config, req: req });
+});
+
 //POST do cadastro
 app.post("/cadastro", (req, res) => {
   console.log("POST /cadastro");
@@ -156,7 +177,7 @@ app.post("/cadastro", (req, res) => {
     if (row) {
       //A variável 'row' irá retornar dados do banco de dados,
       //executado através do SQL, variável query
-      res.send("Usuário já cadastrado, refaça o cadastro");
+      res.redirect("/fail");
     } else {
       //3- Se usuário não existe no banco cadastrar
       const insertQuery =
@@ -164,7 +185,7 @@ app.post("/cadastro", (req, res) => {
       db.run(insertQuery, [username, password, email, tel, cpf, rg], (err) => {
         //Inserir a lógica do INSERT
         if (err) throw err;
-        res.send("Usuário cadastrado com sucesso");
+        res.redirect("/fail");
       });
     }
   });
@@ -204,7 +225,7 @@ app.get("/dashboard", (req, res) => {
 // Middleware para capturar rotas não existentes
 app.use("*", (req, res) => {
   // Envia uma resposta de erro 404
-  res.status(404).render("pages/404", { ...config, req: req });
+  res.status(404).render("pages/fail", { ...config, req: req });
 });
 
 //app.listen() deve ser o último comando da aplicação
